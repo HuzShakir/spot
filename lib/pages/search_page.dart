@@ -138,7 +138,7 @@ class _SearchPageState extends State<SearchPage> {
                                       },
                                     );
                                   } else {
-                                    return Text("Kai Search kar",
+                                    return Text("Loading",
                                         style: TextStyle(color: Colors.white));
                                   }
                                 },
