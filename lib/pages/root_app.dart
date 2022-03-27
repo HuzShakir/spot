@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:spot/pages/Profile_page.dart';
 import 'package:spot/pages/home_page.dart';
 import 'package:spot/pages/search_page.dart';
 import 'package:spot/screens/login_screen.dart';
@@ -21,33 +22,6 @@ class _RootAppState extends State<RootApp> {
     // TODO: implement initState
     super.initState();
     // print(spotify.search.get("thats what i want").first(2));
-  }
-
-  void getImages() async {
-    final credentials = SpotifyApiCredentials(
-        "d58296fd034f4208b15dd0801bc36a7c", "bd41522a547f4238abcd39b623379def");
-    final spotify = SpotifyApi(credentials);
-    var res = await spotify.search.get("thats what i want").first(2);
-    res.forEach((pages) {
-      pages.items!.forEach((item) {
-        if (item is PlaylistSimple) {
-          print('Playlist: \n'
-              'id: ${item.id}\n'
-              'name: ${item.name}:\n'
-              'collaborative: ${item.collaborative}\n'
-              'href: ${item.href}\n'
-              'trackslink: ${item.tracksLink!.href}\n'
-              'owner: ${item.owner}\n'
-              'public: ${item.owner}\n'
-              'snapshotId: ${item.snapshotId}\n'
-              'type: ${item.type}\n'
-              'uri: ${item.uri}\n'
-              'images: ${item.images!.length>0 ? item.images![0].url:0}\n'
-              '-------------------------------');
-        }
-        // return await spotify.search.get("thats what i want").first(2);
-      });
-    });
   }
 
   @override
@@ -72,53 +46,38 @@ class _RootAppState extends State<RootApp> {
           ),
         ),
         SearchPage(),
-        SafeArea(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text("Hello " + FirebaseAuth.instance.currentUser!.uid),
-            InkWell(
-              onTap: () async {
-                await FirebaseAuth.instance.signOut();
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => LoginScreen(),
-                  ),
-                );
-              },
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 25),
-                child: Text("Log out"),
-                // width: double.infinity,
-                padding: EdgeInsets.all(12),
-                alignment: Alignment.center,
-                decoration: const ShapeDecoration(
-                    color: Color.fromRGBO(30, 215, 96, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    )),
-              ),
-            ),
-            InkWell(
-              onTap: () async {
-                print("object");
-                getImages();
-              },
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 25),
-                child: Text("Check karto"),
-                // width: double.infinity,
-                padding: EdgeInsets.all(12),
-                alignment: Alignment.center,
-                decoration: const ShapeDecoration(
-                    color: Color.fromRGBO(30, 215, 96, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    )),
-              ),
-            )
-          ],
-        ))
+        ProfilePage()
+        // SafeArea(
+        //     child: Column(
+        //   crossAxisAlignment: CrossAxisAlignment.center,
+        //   children: [
+        //     Text("Hello " + FirebaseAuth.instance.currentUser!.uid),
+        //     InkWell(
+        //       onTap: () async {
+        //         await FirebaseAuth.instance.signOut();
+        //         Navigator.of(context).pushReplacement(
+        //           MaterialPageRoute(
+        //             builder: (context) => LoginScreen(),
+        //           ),
+        //         );
+        //       },
+        //       child: Container(
+        //         margin: EdgeInsets.symmetric(vertical: 25),
+        //         child: Text("Log out"),
+        //         // width: double.infinity,
+        //         padding: EdgeInsets.all(12),
+        //         alignment: Alignment.center,
+        //         decoration: const ShapeDecoration(
+        //             color: Color.fromRGBO(30, 215, 96, 1),
+        //             shape: RoundedRectangleBorder(
+        //               borderRadius: BorderRadius.all(Radius.circular(5)),
+        //             )),
+        //       ),
+        //     ),
+            
+        //   ],
+        // )
+        // )
         // Center(
         //   child: Text(
         //     "Setting",
@@ -135,7 +94,7 @@ class _RootAppState extends State<RootApp> {
       Feather.home,
       Feather.book,
       Feather.search,
-      Feather.settings,
+      Feather.user,
     ];
     return Container(
       height: 80,

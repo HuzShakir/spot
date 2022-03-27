@@ -49,6 +49,16 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
     user = FirebaseFirestore.instance
         .collection('users')
         .doc(auth.currentUser!.uid);
+    user
+        .collection("Liked Songs")
+        .doc(widget.id.toString())
+        .get()
+        .then((value) {
+      if (value.exists) {
+        fav = true;
+        icon = Icons.favorite;
+      }
+    });
   }
 
   initPlayer() {
@@ -162,16 +172,22 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
                     onPressed: () {
                       setState(() {
                         if (!fav) {
-                          user.collection("Liked Songs").doc(widget.id.toString()).set({
-                            "id":widget.id,
-                            "duration":widget.duration,
-                            "title":widget.title,
-                            "url":widget.songUrl,
-                            "artist":widget.description,
-
+                          user
+                              .collection("Liked Songs")
+                              .doc(widget.id.toString())
+                              .set({
+                            "id": widget.id,
+                            "duration": widget.duration,
+                            "title": widget.title,
+                            "url": widget.songUrl,
+                            "artist": widget.description,
                           });
                           icon = Icons.favorite;
                         } else {
+                          user
+                              .collection("Liked Songs")
+                              .doc(widget.id.toString())
+                              .delete();
                           icon = Icons.favorite_border;
                         }
                         fav = !fav;
