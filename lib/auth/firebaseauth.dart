@@ -34,6 +34,7 @@ class AuthMethods {
         );
         try {
           print(cred.user!.uid);
+          cred.user!.sendEmailVerification();
         } catch (e) {}
         model.User _user = model.User(username, email, password);
         // adding user in our database
@@ -65,7 +66,12 @@ class AuthMethods {
           email: email,
           password: password,
         );
-        res = "success";
+        if (_auth.currentUser!.emailVerified) {
+          res = "success";
+        } else {
+          _auth.currentUser!.sendEmailVerification();
+          res = "Please Verify Email";
+        }
       } else {
         res = "Please enter all the fields";
       }

@@ -13,7 +13,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:spotify/spotify.dart';
 
 void main() async {
-  
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -21,7 +20,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,8 +42,18 @@ class MyApp extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.active) {
               // Checking if the snapshot has any data or not
               if (snapshot.hasData) {
+                var auth = FirebaseAuth.instance;
+                if (auth.currentUser != null) {
+                  if (auth.currentUser!.emailVerified) {
+                    return RootApp();
+                  } else {
+                    auth.currentUser!.sendEmailVerification();
+                    return LoginScreen(
+                      emailver: true,
+                    );
+                  }
+                }
                 // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
-                return RootApp();
                 // return SafeArea(
                 //     child: Column(
                 //       crossAxisAlignment: CrossAxisAlignment.center,

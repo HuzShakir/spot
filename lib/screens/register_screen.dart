@@ -36,7 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (res == "success") {
        Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => RootApp(),
+          builder: (context) => LoginScreen(emailver:true),
           ),
         
       );

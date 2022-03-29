@@ -36,7 +36,6 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-    // songs = fetchSong("Me and My Broken Heart");
     if (search.isEmpty) {
       search = "Ela how are youu";
     }
@@ -75,15 +74,9 @@ class _SearchPageState extends State<SearchPage> {
                                 future: songs,
                                 builder: (context, song) {
                                   if (song.hasData) {
-                                    // setState(() {
-                                    //   fav = List.filled(
-                                    //       song.data?.length ?? 0, false);
-                                    // });
                                     return ListView.builder(
-                                      // Let the ListView know how many items it needs to build.
+                                      physics: NeverScrollableScrollPhysics(),
                                       itemCount: song.data?.length,
-                                      // Provide a builder function. This is where the magic happens.
-                                      // Convert each item into a widget based on the type of item it is.
                                       itemBuilder: (context, index) {
                                         final item = song.data?[index];
 

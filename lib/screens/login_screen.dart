@@ -10,7 +10,8 @@ import 'package:spot/utils/colors.dart';
 import 'package:spot/widgets/text_field.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  final bool emailver;
+  LoginScreen({Key? key, this.emailver = false}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -20,10 +21,16 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   var _isLoading = false;
-  var comeonbaby = "uhfwuhwefw";
+  var comeonbaby = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    comeonbaby = widget.emailver ? "Verify Email" : "";
+  }
 
   void loginUser() async {
-    log("ehfwef9hwef");
     setState(() {
       _isLoading = true;
     });
@@ -32,10 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
     print(res);
     if (res == 'success') {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => RootApp()
-          ),
-          (route) => false);
+          MaterialPageRoute(builder: (context) => RootApp()), (route) => false);
 
       setState(() {
         _isLoading = false;
@@ -43,15 +47,14 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     } else {
       setState(() {
+        comeonbaby = res;
         _isLoading = false;
       });
-      // showSnackBar(context, res);
     }
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
@@ -68,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 120),
-          Text(_isLoading ? comeonbaby : "Nathi chaltu"),
+          Text(comeonbaby),
           SvgPicture.asset('assets/spotify-1.svg', height: 55),
           Flexible(
             child: Container(),
@@ -113,7 +116,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               GestureDetector(
                   onTap: () {
-                    print("tdtdydtt4ttet friends welcome to my youtube channel have ziye register par");
                     Navigator.push(
                         context,
                         MaterialPageRoute(

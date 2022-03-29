@@ -69,11 +69,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: 50,
                     ),
+                    IconButton(
+                        onPressed: () {
+                          print(auth.currentUser!.emailVerified);
+                        },
+                        icon: Icon(Icons.email)),
                     CircleAvatar(
                       radius: 50,
                       child: ClipOval(
                           child: Image.network(
-                              "https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png")),
+                              auth.currentUser?.photoURL??"https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png")),
                     ),
                     SizedBox(height: 20),
                     Text(

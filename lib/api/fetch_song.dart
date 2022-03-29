@@ -31,7 +31,7 @@ Future<List> fetchSong(searchString) async {
   };
   final response = await http
       .post(uri, headers: headers, body: {'q': searchString, 'page': '0'});
-  // print(response.body.substring(42, response.body.length - 5));
+  print(response.statusCode);
   if (response.statusCode == 200) {
     List songs = jsonDecode(
             response.body.substring(42, response.body.length - 4))['response']
