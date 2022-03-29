@@ -6,6 +6,7 @@ import 'package:spot/auth/firebaseauth.dart';
 import 'package:spot/pages/root_app.dart';
 import 'package:spot/screens/home_screen.dart';
 import 'package:spot/screens/register_screen.dart';
+import 'package:spot/theme/colors.dart';
 import 'package:spot/utils/colors.dart';
 import 'package:spot/widgets/text_field.dart';
 
@@ -38,8 +39,12 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailController.text, password: _passwordController.text);
     print(res);
     if (res == 'success') {
+      try {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => RootApp()), (route) => false);
+        
+      } catch (e) {
+      }
 
       setState(() {
         _isLoading = false;
@@ -91,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
           InkWell(
             onTap: () => loginUser(),
             child: Container(
-              child: Text("Log In"),
+              child:!_isLoading? Text("Log In"): Center(child: CircularProgressIndicator(color: white),),
               width: double.infinity,
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(vertical: 12),

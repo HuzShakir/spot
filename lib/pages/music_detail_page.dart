@@ -64,7 +64,7 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
   initPlayer() {
     advancedPlayer = new AudioPlayer();
     audioCache = new AudioCache(fixedPlayer: advancedPlayer);
-    advancedPlayer.play(widget.songUrl, isLocal: true);
+    advancedPlayer.play(widget.songUrl);
     advancedPlayer.onDurationChanged
         .listen((d) => print(d.inSeconds.toDouble()));
     advancedPlayer.onAudioPositionChanged.listen((p) => setState(() {
@@ -251,11 +251,11 @@ class _MusicDetailPageState extends State<MusicDetailPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "1:50",
+                  Duration(seconds:_currentSliderValue.toInt()).toString().substring(0,7),
                   style: TextStyle(color: white.withOpacity(0.5)),
                 ),
                 Text(
-                  "4:68",
+                  Duration(seconds:widget.duration.toInt()).toString().substring(0,7),
                   style: TextStyle(color: white.withOpacity(0.5)),
                 ),
               ],

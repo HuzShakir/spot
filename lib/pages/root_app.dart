@@ -106,6 +106,7 @@ class _RootAppState extends State<RootApp> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(items.length, (index) {
               return IconButton(
+                key: Key("item $index"),
                   icon: Icon(
                     items[index],
                     color: activeTab == index ? primary : white,

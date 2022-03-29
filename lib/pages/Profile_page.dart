@@ -69,11 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: 50,
                     ),
-                    IconButton(
-                        onPressed: () {
-                          print(auth.currentUser!.emailVerified);
-                        },
-                        icon: Icon(Icons.email)),
+                    
                     CircleAvatar(
                       radius: 50,
                       child: ClipOval(
@@ -86,6 +82,29 @@ class _ProfilePageState extends State<ProfilePage> {
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        await FirebaseAuth.instance.signOut();
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(top: 25,left: 125,right: 125),
+                        child: Text("Log out"),
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        padding: EdgeInsets.all(12),
+                        alignment: Alignment.center,
+                        decoration: const ShapeDecoration(
+                            color: Color.fromRGBO(30, 215, 96, 1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                            )),
+                      ),
                     ),
                     SizedBox(
                       height: 25,
@@ -155,7 +174,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     color: Colors.white)),
                                             subtitle: Text(data['artist'],
                                                 style: TextStyle(
-                                                    color: Colors.white)),
+                                                    color: grey)),
                                             leading: ConstrainedBox(
                                               child: Image.asset(
                                                   "assets/images/img_1.jpg"),
@@ -182,29 +201,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     .toList());
                           }),
                     ),
-                    InkWell(
-                      onTap: () async {
-                        await FirebaseAuth.instance.signOut();
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 25),
-                        child: Text("Log out"),
-                        // width: double.maxFinite,
-                        padding: EdgeInsets.all(12),
-                        alignment: Alignment.center,
-                        decoration: const ShapeDecoration(
-                            color: Color.fromRGBO(30, 215, 96, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                            )),
-                      ),
-                    ),
+                    
                   ],
                 );
               }

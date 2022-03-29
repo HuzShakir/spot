@@ -5,9 +5,9 @@ import 'package:spot/models/Song.dart' as model;
 import 'package:spotify/spotify.dart';
 
 Future<List> fetchSong(searchString) async {
-  final credentials = SpotifyApiCredentials(
-      "d58296fd034f4208b15dd0801bc36a7c", "bd41522a547f4238abcd39b623379def");
-  final spotify = SpotifyApi(credentials);
+  // final credentials = SpotifyApiCredentials(
+  //     "d58296fd034f4208b15dd0801bc36a7c", "bd41522a547f4238abcd39b623379def");
+  // final spotify = SpotifyApi(credentials);
   var uri = Uri.parse(
       "https://myfreemp3juices.cc/api/search.php?callback=jQuery213046606674582949026_1640356915467");
   var headers = {
@@ -33,17 +33,20 @@ Future<List> fetchSong(searchString) async {
       .post(uri, headers: headers, body: {'q': searchString, 'page': '0'});
   print(response.statusCode);
   if (response.statusCode == 200) {
-    List songs = jsonDecode(
-            response.body.substring(42, response.body.length - 4))['response']
-        .sublist(1)
-        .map((song) {
-      // print(getImages(song['title']));
-      print(model.Song.fromJson(song).artist);
-      return model.Song.fromJson(song);
-      try {} catch (e) {}
-    }).toList();
+    try {
+      List songs = jsonDecode(
+              response.body.substring(42, response.body.length - 4))['response']
+          .sublist(1)
+          .map((song) {
+        // print(getImages(song['title']));
+        print(model.Song.fromJson(song).artist);
+        return model.Song.fromJson(song);
+      }).toList();
+      return songs;
+    } catch (e) {
+      return [];
+    }
 
-    return songs;
     // model.Song song = model.Song.fromJson(jsonDecode(response.body));
     // print(song.url);
   } else {
